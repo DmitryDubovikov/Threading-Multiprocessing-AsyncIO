@@ -1,23 +1,19 @@
 import asyncio
 
 
-async def foo():
-    print("Начало foo")
+async def task1():
     await asyncio.sleep(1)
-    print("Завершение foo")
+    print("Task 1 is done")
 
 
-async def bar():
-    print("Начало bar")
-    await asyncio.sleep(0.5)
-    print("Завершение bar")
+async def task2():
+    await asyncio.sleep(2)
+    print("Task 2 is done")
 
 
 async def main():
-    task1 = asyncio.create_task(foo())
-    task2 = asyncio.create_task(bar())
-    await task1
-    await task2
+    await asyncio.gather(task1(), task2())
 
 
-asyncio.run(main())
+if __name__ == "__main__":
+    asyncio.run(main())
