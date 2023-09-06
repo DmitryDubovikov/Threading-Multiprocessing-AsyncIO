@@ -1,14 +1,23 @@
-import threading
-import time
+import asyncio
 
-def background_task():
-    for i in range(5):
-        print("Задача в фоне: ", i)
-        time.sleep(1)
 
-if __name__ == "__main__":
-    background_thread = threading.Thread(target=background_task)
-    background_thread.daemon = True  # Устанавливаем флаг daemon, чтобы поток был потоком заднего плана
-    background_thread.start()
+async def foo():
+    print("Начало foo")
+    await asyncio.sleep(1)
+    print("Завершение foo")
 
-    print("Основной поток завершил работу")
+
+async def bar():
+    print("Начало bar")
+    await asyncio.sleep(0.5)
+    print("Завершение bar")
+
+
+async def main():
+    task1 = asyncio.create_task(foo())
+    task2 = asyncio.create_task(bar())
+    await task1
+    await task2
+
+
+asyncio.run(main())
